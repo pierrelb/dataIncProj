@@ -12,6 +12,9 @@ import pandas as pd
 
 app = Flask(__name__)
 
+js_resources = INLINE.render_js()
+css_resources = INLINE.render_css()
+
 @app.route('/')
 def main():
     return redirect('/index')
@@ -34,6 +37,7 @@ def index():
         script, div = components(plot)
         
         return render_template('index.html', script=script, div=div)
+        return render_template('index.html', js_resources=js_resources, css_resources=css_resources, script=script, div=div)
     else:
         return redirect('/league_effect') 
 
