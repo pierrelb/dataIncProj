@@ -42,9 +42,12 @@ def index():
         script, div = components(plot)
         return render_template('index.html', js_resources=js_resources, css_resources=css_resources, script=script, div=div)
     else:
-        return redirect('/league_effect') 
+        if request.form['submit'] == "Professional League Data":
+            return redirect('/league_data') 
+        elif request.form['submit'] == "Player Data":
+            return redirect('/player_data') 
 
-@app.route('/league_effect',methods=['GET','POST'])
+@app.route('/league_data',methods=['GET','POST'])
 def leagues():
     if request.method == 'GET':
         
@@ -111,41 +114,51 @@ def leagues():
         
         return render_template('league.html', js_resources=js_resources, css_resources=css_resources, script=script, div=div)
     else:
-        return redirect('/player_props') 
+        if request.form['submit'] == "Player Data":
+            return redirect('/player_data') 
+        else:
+            return redirect('/index')
 
-@app.route('/player_props')
+@app.route('/player_data',methods=['GET','POST'])
 def players():
-    month_map = {k: v for k,v in enumerate(calendar.month_abbr)}
+    if request.method == 'GET':
+        month_map = {k: v for k,v in enumerate(calendar.month_abbr)}
+        
+        df = pd.read_csv('wc_squads.csv')
+        df.DoB = pd.to_datetime(df.DoB)
+        df['birth_month'] = df.DoB.map(lambda x: x.month)
+        df_mth = df.birth_month.value_counts().sort_index()
+        df_mth.index = df_mth.index.map(lambda x: month_map[x])
+        
+        grouped = df.groupby('WC_Year')
+        
+        avg_age = df.groupby('WC_Year').Age.mean().to_frame()
+        
+        plot1 = figure(tools=TOOLS,
+                      title='Average Team Age',
+                      x_axis_label='World Cup Year',
+                      toolbar_location="below"
+                      )
     
-    df = pd.read_csv('wc_squads.csv')
-    df.DoB = pd.to_datetime(df.DoB)
-    df['birth_month'] = df.DoB.map(lambda x: x.month)
-    df_mth = df.birth_month.value_counts().sort_index()
-    df_mth.index = df_mth.index.map(lambda x: month_map[x])
-    
-    grouped = df.groupby('WC_Year')
-    
-    avg_age = df.groupby('WC_Year').Age.mean().to_frame()
-    
-    plot1 = figure(tools=TOOLS,
-                  title='Average Team Age',
-                  x_axis_label='World Cup Year',
-                  toolbar_location="below"
-                  )
-    
-    plot1.line(avg_age.index, avg_age.Age.values, color='green', line_width=4, alpha=0.5)
-    
-    # select = Select(title="World Cup Year:", value="all", options=["all"] + map(str, df.WC_Year.unique().tolist()))
-    
-    plot2 = Bar(df_mth, toolbar_location="below")
-    plot2.x_range = FactorRange(factors=df_mth.index.tolist())
-    
-    plots = {"plot1": plot1, "plot2": plot2}
-    
-    script, div = components(plots)
-    
-    
-    return render_template('player.html', js_resources=js_resources, css_resources=css_resources, script=script, div=div)
+        plot1.line(avg_age.index, avg_age.Age.values, color='green', line_width=4, alpha=0.5)
+        
+        # select = Select(title="World Cup Year:", value="all", options=["all"] + map(str, df.WC_Year.unique().tolist()))
+        
+        plot2 = Bar(df_mth, toolbar_location="below")
+        plot2.x_range = FactorRange(factors=df_mth.index.tolist())
+        
+        plots = {"plot1": plot1, "plot2": plot2}
+        
+        script, div = components(plots)
+        
+        
+        return render_template('player.html', js_resources=js_resources, css_resources=css_resources, script=script, div=div)
+        
+    else:
+        if request.form['submit'] == "Professional League Data":
+            return redirect('/league_data') 
+        else:
+            return redirect('/index') 
 if __name__ == '__main__':
   app.run(port=33507)
   
