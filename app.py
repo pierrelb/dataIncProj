@@ -56,7 +56,7 @@ def leagues():
         df_rank = df_rank.replace(to_replace="West Germany", value="Germany")
 
         team_avg_ranking = df_rank.groupby('team').ranking.mean().to_frame()
-        team_num_wc = df_rank.team.value_counts().head(40).to_frame()
+        team_num_wc = df_rank.team.value_counts().head(50).to_frame()
         
         df_team_rank = team_avg_ranking.join(team_num_wc)
         df_team_rank = df_team_rank.dropna()
@@ -86,7 +86,7 @@ def leagues():
         df2 = df2.T
         
         plot2 = figure(tools=TOOLS,
-                      title='Countries with Most WC Players playing professionally',
+                      title='Soccer Leagues with Most WC Players',
                       x_axis_label='World Cup Year',
                       toolbar_location="below"
                       )
