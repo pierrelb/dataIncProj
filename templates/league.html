@@ -7,21 +7,43 @@
   </head>
   <body>
     <div class=page>
-      <h1>Soccer History</h1>
+      <h3>Soccer History</h3>
       <p>
         Soccer teams that have consistently qualified for World Cups tend to fare
-        better at the tournament. Better teams should consistently qualify, but 
-        what makes a country better at soccer?
+        better at the tournament. The data below shows the average World Cup position
+        of the 50 nations that made it to the most World Cups. The teams that 
+        have played in at least 75% of World Cup tournaments have on average placed
+        in the top 10 teams in the world. These teams are Brazil, Italy,
+        Germany (including West Germany), and Argentina.
       </p>
+      
       {{ div.history | safe }}
-      <h1>Professional League Quality</h1>
+      
+      <h3>Professional League Quality</h3>
       <p>
-        Some professional leagues are better represented at the World Cup. The countries
-        with these leagues are regular participants at World 
+        Nations that qualify for the World Cup should a squad of better players.
+        A professional league with more players who have played in  the World Cup
+        is likely to be a better quality league. The data shows World Cup Players
+        disproportionately play in 5 Western European professional leagues. These
+        countries 5 benefit as the players from their nation do not need to leave
+        to play with better quality players, aiding their development. Other countries
+        must find another way to develop their national teams. 
       </p>
+      
       {{ div.nations | safe }}
-      <h1>Countries with most expatriates</h1>
+      
+      <h3>Countries with most expatriates</h3>
+      <p>
+        Professional players in countries with less developed professional leagues
+        make their way to the higher quality professional leagues. The bar graph below
+        shows expatriate players in the top 5 professional leagues. Brazilians and
+        are well represented in these 5 leagues. It is interesting that while France
+        has one of the top 5 leagues, they are also have the top 5 expatriate players
+        in the top 5 leagues (these players are in the other 4 leagues).
+      </p>
+      
       {{ div.nationality | safe }}
+      
       <form id='league' method='post'>
 				<p>
 					<input type='submit' name='submit', value='Home'>
