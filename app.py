@@ -1,14 +1,16 @@
-import pandas as pd
 import locale
+import calendar
+import pandas as pd
 
 from flask import Flask, render_template, request, redirect
 
 from bokeh.plotting import figure
-from bokeh.charts import Scatter
+from bokeh.charts import Bar
 from bokeh.embed import components
-from bokeh.palettes import Spectral11
-
-import pandas as pd
+from bokeh.models import FactorRange
+from bokeh.resources import Resources, INLINE
+from bokeh.models.widgets import Select
+from bokeh.palettes import RdBu11, YlGn9
 
 app = Flask(__name__)
 
