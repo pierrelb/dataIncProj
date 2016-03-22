@@ -124,7 +124,7 @@ def players():
     df_mth.index = df_mth.index.map(lambda x: month_map[x])
     
     grouped = df.groupby('WC_Year')
-    import ipdb; ipdb.set_trace()
+    
     avg_age = df.groupby('WC_Year').Age.mean().to_frame()
     
     plot1 = figure(tools=TOOLS,
@@ -146,31 +146,6 @@ def players():
     
     
     return render_template('player.html', js_resources=js_resources, css_resources=css_resources, script=script, div=div)
-    
-    # plot = Bar(df_mth, 'birth month', title="World Cup Players by Birth Month")
-    # 
-    # grouped = df.groupby('WC_Year')
-    # 
-    # # TOOLS="pan,wheel_zoom,box_zoom,reset,save"
-    # # 
-    # # plot = figure(tools=TOOLS,
-    # #               title='WC Player Birth Month',
-    # #               x_axis_label='World Cup Year',
-    # #               y_axis_label='Number of Players'
-    # #               )
-    # grouped_mth = grouped.birth_month.value_counts().sort_index()
-    # x_axis = grouped_mth[2014].index.map(lambda x: month_map[x])
-    # 
-    # # for num, year in enumerate(df.WC_Year.unique()):
-    # #     if num<11:
-    # #         plot.quad(top=hist, bottom=0, left=edges[:-1], right=edges[1:])
-    # #         plot.scatter(x_axis, grouped_mth[year].values,legend=str(year),color=RdBu11[num])
-    # #     else:
-    # #         plot.scatter(x_axis, grouped_mth[year].values,legend=str(year),color=YlGn9[num-11])
-    # 
-    # script, div = components(plot)
-    # 
-    # return render_template('player.html', script=script, div=div)
-
 if __name__ == '__main__':
   app.run(port=33507)
+  
