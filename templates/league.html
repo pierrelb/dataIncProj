@@ -1,14 +1,31 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.11.1.min.css" type="text/css" />
-    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.11.1.min.js"></script>
+    {{ js_resources | safe }}
+    {{ css_resources | safe }}
     {{ script | safe }}
   </head>
   <body>
     <div class=page>
-      <h1>Countries where most World Cup Players play professionally</h1>
-      {{ div | safe }}
+      <h1>Soccer History</h1>
+      <p>
+        Soccer teams that have consistently qualified for World Cups tend to fare
+        better at the tournament. Better teams should consistently qualify, but 
+        what makes a country better at soccer?
+      </p>
+      {{ div.history | safe }}
+      <h1>Professional League Quality</h1>
+      <p>
+        Some professional leagues are better represented at the World Cup. The countries
+        with these leagues are regular participants at World 
+      </p>
+      {{ div.nations | safe }}
+      <h1>Countries with most expatriates</h1>
+      {{ div.nationality | safe }}
+      <form id='league' method='post'>
+				<p>
+					<input type='submit' value='WC player attributes'>
+				</p>
     </div>
   </body>
 </html>

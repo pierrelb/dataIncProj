@@ -1,14 +1,26 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.11.1.min.css" type="text/css" />
-    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.11.1.min.js"></script>
+    {{ js_resources | safe }}
+    {{ css_resources | safe }}
     {{ script | safe }}
   </head>
   <body>
     <div class=page>
       <h1>Expanded financial resources in modern football</h1>
+      <p>
+        The FIFA World Cup takes place every 4 years, and the next edition
+        will be in Russia in the summer of 2018. Only Westen European and South
+        American nations have participated in the finals of all World Cups, but
+        other nations have made significant investments in the sport hoping for
+        improved performances at the World Cup. This is an investigation into the
+        factors affecting performance at World Cup Tournaments.
+      </p>
       {{ div | safe }}
+			<form id='index' method='post'>
+				<p>
+					<input type='submit' value='Leagues with WC players'>
+				</p>
     </div>
   </body>
 </html>

@@ -1,14 +1,17 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.11.1.min.css" type="text/css" />
-    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.11.1.min.js"></script>
+    {{ js_resources | safe }}
+    {{ css_resources | safe }}
     {{ script | safe }}
   </head>
   <body>
     <div class=page>
-      <h1>Countries where most World Cup Players play professionally</h1>
-      {{ div | safe }}
+      <h1>World Cup Player birth month</h1>
+      <div id="widget_box">
+        {{ div.select | safe }}
+      </div>
+      {{ div.plot | safe }}
     </div>
   </body>
 </html>
