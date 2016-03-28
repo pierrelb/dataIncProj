@@ -26,9 +26,9 @@ def main():
 @app.route('/index',methods=['GET','POST'])
 def index():
     if request.method == 'GET':
-        df2 = pd.read_csv("record_transfers.csv")
+        df_tranfer = pd.read_csv("record_transfers.csv")
         locale.setlocale(locale.LC_NUMERIC, '')
-        df2['fee_pounds'] = df2.fee_pounds.apply(locale.atof)
+        df_tranfer['fee_pounds'] = df_tranfer.fee_pounds.apply(locale.atof)
         
         plot = figure(tools=TOOLS,
                           title='World Record Soccer Transfer Fee',
@@ -37,7 +37,7 @@ def index():
                           toolbar_location="below"
                           )
         
-        plot.line(df2['yr'], df2['fee_pounds'],color=RdBu11[0],line_width=4)
+        plot.line(df_tranfer['yr'], df_tranfer['fee_pounds'],color=RdBu11[0],line_width=4)
         
         script, div = components(plot)
         return render_template('index.html', js_resources=js_resources, css_resources=css_resources, script=script, div=div)
@@ -71,19 +71,19 @@ def leagues():
         plot1.scatter(df_team_rank.team, df_team_rank.ranking, color='blue', size=8, alpha=0.5)
         
         
-        df = pd.read_csv('wc_squads.csv')
-        grouped = df.groupby('WC_Year')
-        club_country = df.Club_Country.unique()
+        df_squads = pd.read_csv('wc_squads.csv')
+        grouped = df_squads.groupby('WC_Year')
+        club_country = df_squads.Club_Country.unique()
         club_country.sort()
-        df2 = pd.DataFrame({"club_country":club_country})
-        df2 = df2.set_index("club_country")
+        df_clb_ctry = pd.DataFrame({"club_country":club_country})
+        dfdf_clb_ctry2 = df_clb_ctry.set_index("club_country")
         
         for year in df.WC_Year.unique():
             country_to_club = grouped.Club_Country.value_counts()[year] / grouped.Country.value_counts()[year]
-            df2 = df2.join(country_to_club.to_frame(year))
+            df_clb_ctry = df_clb_ctry.join(country_to_club.to_frame(year))
             
-        df2 = df2.fillna(0) # If NaN, country league not represented at the world cup
-        df2 = df2.T
+        df_clb_ctry = df_clb_ctry.fillna(0) # If NaN, country league not represented at the world cup
+        df_clb_ctry = df_clb_ctry.T
         
         plot2 = figure(tools=TOOLS,
                       title='Soccer Leagues with Most WC Players',
@@ -92,14 +92,14 @@ def leagues():
                       )
         
         # take the top 11 countries and plot
-        for num, country in enumerate(df2.sum().sort_values(ascending=False).head(11).index):
-            plot2.scatter(df2.index, df2[country],legend=country,color=RdBu11[num],size=8, alpha=0.5)
+        for num, country in enumerate(ddf_clb_ctryf2.sum().sort_values(ascending=False).head(11).index):
+            plot2.scatter(df_clb_ctry.index, df_clb_ctry[country],legend=country,color=RdBu11[num],size=8, alpha=0.5)
         
         plot2.legend.location = "top_left"
         
-        df3 = pd.read_csv("top_five_leagues.csv")
+        df_league_data = pd.read_csv("top_five_leagues.csv")
         
-        df_expats = df3[df3.nation!=df3.nationality]
+        df_expats = df_league_data[df_league_data.nation!=df_league_data.nationality]
         
         for season in df_expats.season.unique():
             nationality_expats = df_expats.groupby('season').nationality.value_counts()[season].head(10)
@@ -124,15 +124,15 @@ def players():
     if request.method == 'GET':
         month_map = {k: v for k,v in enumerate(calendar.month_abbr)}
         
-        df = pd.read_csv('wc_squads.csv')
-        df.DoB = pd.to_datetime(df.DoB)
-        df['birth_month'] = df.DoB.map(lambda x: x.month)
-        df_mth = df.birth_month.value_counts().sort_index()
+        df_squads = pd.read_csv('wc_squads.csv')
+        df_squads.DoB = pd.to_datetime(df.DoB)
+        df_squads['birth_month'] = df_squads.DoB.map(lambda x: x.month)
+        df_mth = df_squads.birth_month.value_counts().sort_index()
         df_mth.index = df_mth.index.map(lambda x: month_map[x])
         
-        grouped = df.groupby('WC_Year')
+        grouped = df_squads.groupby('WC_Year')
         
-        avg_age = df.groupby('WC_Year').Age.mean().to_frame()
+        avg_age = df_squads.groupby('WC_Year').Age.mean().to_frame()
         
         plot1 = figure(tools=TOOLS,
                       title='Average Team Age',
