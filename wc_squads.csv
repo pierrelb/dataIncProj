@@ -1,4 +1,4 @@
-,No.,Pos.,Player,DoB,Caps,Club,Age,Country,Club_Country,WC_Year
+,number,position,player_name,dob,caps,club,age,team,club_country,year
 0,0,GK,Ángel Bossio,1905-05-05,,Talleres,25.0,Argentina,Argentina,1930
 1,0,GK,Juan Botasso,1908-10-23,,Argentino de Quilmes,21.0,Argentina,Argentina,1930
 2,0,FW,Roberto Cherro,1907-02-23,,Boca Juniors,23.0,Argentina,Argentina,1930
