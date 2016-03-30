@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    {{ js_resources | safe }}
+    {{ script | safe }}
+  </head>
+  <body style="background-color:lightgrey;">
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">World Cup Analysis</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/country_data">Team Analysis</a></li>
+          <li><a href="/player_data">Player Analysis</a></li>
+          <li><a href="/league_data">Professional League Effect</a></li>
+          <li><a href="/interesting_stuff">Other Topics</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class=page>
+      <h1>Expanded financial resources in modern soccer</h1>
+      <p>
+        The FIFA World Cup takes place every 4 years, and the next edition
+        will be in Russia in the summer of 2018. Only Westen European and South
+        American nations have participated in the finals of all World Cups, but
+        other nations have made significant investments in the sport. The investment
+        in the last 3 decades has had an impact in professional soccer, but it is
+        unclear how this translates to international competitions.
+        
+        Professional soccer clubs sign players to contracts of varied lengths. A club
+        can only sign a player from another club if a transfer fee is agreed on and
+        paid to the player's current team. The surge in financial resources in the
+        last few decades has seen an increase in transfer fees paid, with the world
+        record transfer fee surging within the last 15 years.
+      </p>
+      
+      {{ div.plt_trans_fee | safe }}
+      
+      <h1>Does birth month matter?</h1>
+      <p>
+        There was an interesting study on the bias in the NHL for players born in
+        the<a href="https://www.nhl.com/news/study-suggests-nhl-has-bias-in-favour-of-players-born-earlier-in-the-year/c-657724"> first 3 months of the year</a>.
+        The most intersting aspect was that players born at the beginning of the year
+        were a little older than those in their age group during their school years,
+        so they were selected for school teams due to being a little stronger, faster and 
+        bigger. These selections offered them the opportunity to practice
+        more, to the point where more could play professionally.
+        
+        There were more World Cup soccer players were born in the first 3 months
+        of the year, but this is unlikely to have any significant role in performance
+        at the World Cup.
+      </p>
+
+      {{ div.plt_mth_birth | safe }}
+
+    </div>
+  </body>
+</html>

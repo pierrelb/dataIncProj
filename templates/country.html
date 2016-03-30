@@ -6,8 +6,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{ js_resources | safe }}
+    {{ script | safe }}
   </head>
-  <body style="background-color:lightgrey;">  <!-- <body background="static/images/stadium.jpg"> -->
+  <body style="background-color:lightgrey;">
     <nav class="navbar navbar-inverse navbar-fixed-bottom">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -21,24 +22,18 @@
         </ul>
       </div>
     </nav>
-    <div class=page>
-      <h1>World Cup Player Data</h1>
-      <h3>Player Age</h3>
-      <p>
-        A World Cup tournament squad may is expected to contain the best players
-        available to a coach. Some are younger and more physically gifted, while
-        others are older and depend on their experience. Discussions about squad
-        composition usually relys on anecdotal evidence.
-        
-        Teams were under 25 years of age on average during the earliest World Cups.
-        The average age rose by about 2 years since then. The age of more successful
-        teams, and their makeup should also be investigated. For example, it would be
-        intersting to understand if teams with players in their mid-20s performs
-        differently from teams where player ages are more widely varied.
-      </p>
-      {{ script | safe }}
-      {{ div.plt_age | safe }}
-      
-    </div>
+    
+    <h3>Consistent qualification</h3>
+    <p>
+      Soccer teams that have consistently qualified for World Cups tend to fare
+      better at the tournament. The data below shows the average World Cup position
+      of the 50 nations that made it to the most World Cups. The teams that 
+      have played in at least 75% of World Cup tournaments have on average placed
+      in the top 10 teams in the world. These teams are Brazil, Italy,
+      Germany (including West Germany), and Argentina.
+    </p>
+    
+    {{ div.history | safe }}
+    
   </body>
 </html>

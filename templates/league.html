@@ -1,23 +1,39 @@
-<!doctype html>
-<html lang="en">
+<html>
+  <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap.min.css') }}">
+  <meta name="viewport" content = "width=device-width, initial-scale=1.0">
   <head>
-    {{ js_resources | safe }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    {{ script | safe }}
+    {{ js_resources | safe }}
   </head>
-  <body>
+  <body style="background-color:lightgrey;">
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">World Cup Analysis</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/country_data">Team Analysis</a></li>
+          <li><a href="/player_data">Player Analysis</a></li>
+          <li><a href="/league_data">Professional League Effect</a></li>
+          <li><a href="/interesting_stuff">Other Topics</a></li>
+        </ul>
+      </div>
+    </nav>
+    
+    {{ script | safe }}
+    
     <div class=page>
-      <h3>Consistent qualification</h3>
+      <h3>Countries with most expatriates</h3>
       <p>
-        Soccer teams that have consistently qualified for World Cups tend to fare
-        better at the tournament. The data below shows the average World Cup position
-        of the 50 nations that made it to the most World Cups. The teams that 
-        have played in at least 75% of World Cup tournaments have on average placed
-        in the top 10 teams in the world. These teams are Brazil, Italy,
-        Germany (including West Germany), and Argentina.
+        Professional players in countries with less developed professional leagues
+        make their way to the higher quality professional leagues. The bar graph below
+        shows expatriate players in the top 5 professional leagues. Brazilians and
+        are well represented in these 5 leagues. It is interesting that while France
+        has one of the top 5 leagues, they are also have the top 5 expatriate players
+        in the top 5 leagues (these players are in the other 4 leagues).
       </p>
       
-      {{ div.history | safe }}
+      {{ div.expats | safe }}
       
       <h3>Professional League Quality</h3>
       <p>
@@ -32,24 +48,6 @@
       
       {{ div.nations | safe }}
       
-      <h3>Countries with most expatriates</h3>
-      <p>
-        Professional players in countries with less developed professional leagues
-        make their way to the higher quality professional leagues. The bar graph below
-        shows expatriate players in the top 5 professional leagues. Brazilians and
-        are well represented in these 5 leagues. It is interesting that while France
-        has one of the top 5 leagues, they are also have the top 5 expatriate players
-        in the top 5 leagues (these players are in the other 4 leagues).
-      </p>
-      
-      {{ div.nationality | safe }}
-      {{ div.slider | safe }}
-      
-      <form id='league' method='post'>
-				<p>
-					<input type='submit' class='btn btn-primary' name='submit', value='Home'>
-          <input type='submit' class='btn btn-primary' name='submit', value='Player Data'>
-				</p>
     </div>
   </body>
 </html>

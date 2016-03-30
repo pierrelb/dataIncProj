@@ -1,28 +1,25 @@
-<!doctype html>
-<html lang="en">
+<html>
+  <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap.min.css') }}">
+  <meta name="viewport" content = "width=device-width, initial-scale=1.0">
   <head>
-    {{ js_resources | safe }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    {{ script | safe }}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    {{ js_resources | safe }}
   </head>
-  <body>
-    <div class=page>
-      <h1>Expanded financial resources in modern soccer</h1>
-      <p>
-        The FIFA World Cup takes place every 4 years, and the next edition
-        will be in Russia in the summer of 2018. Only Westen European and South
-        American nations have participated in the finals of all World Cups, but
-        other nations have made significant investments in the sport hoping for
-        improved performances at the World Cup. The investment in the last 3 decades
-        has had an impact in professional soccer, but it's effects on the international
-        game is less understood.
-      </p>
-      {{ div | safe }}
-			<form id='index' method='post'>
-				<p>
-					<input type='submit' class='btn btn-primary' name='submit', value='Professional League Data'>
-          <input type='submit' class='btn btn-primary' name='submit', value='Player Data'>
-				</p>
-    </div>
+
+  <body class = "body" style="background-color:lightgrey;">
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">World Cup Analysis</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/country_data">Team Analysis</a></li>
+          <li><a href="/player_data">Player Analysis</a></li>
+          <li><a href="/league_data">Professional League Effect</a></li>
+          <li><a href="/interesting_stuff">Other Topics</a></li>
+        </ul>
+      </div>
+    </nav>
   </body>
-</html>
+</html>  
