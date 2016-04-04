@@ -32,6 +32,9 @@ df_squads['birth_month'] = df_squads.dob.map(lambda x: x.month)
 
 df_league_data = pd.read_csv("top_five_leagues.csv")
 
+df_prob_fifa_rank = pd.read_csv('prob_win.csv')
+df_prob_draw_fifa_rank = pd.read_csv('prob_draw.csv')
+
 js_resources = INLINE.render_js()
 
 TOOLS=""
@@ -43,7 +46,27 @@ def main():
 
 @app.route('/index')
 def index():
-    return render_template('index.html', js_resources=js_resources)
+    plot_pVic = figure(tools=TOOLS,
+                  x_axis_label='How much higher is your team ranked',
+                  y_axis_label='Probability of Winning',
+                  toolbar_location=None
+                  )
+                  
+    plot_pVic.scatter(df_prob_fifa_rank.rank_diff, df_prob_fifa_rank.prob, color='blue', size=8, alpha=0.5)
+    
+    plot_pDrw = figure(tools=TOOLS,
+                  x_axis_label='Difference in team rankings',
+                  y_axis_label='Probability of a Draw',
+                  toolbar_location=None
+                  )
+    
+    plot_pDrw.scatter(df_prob_draw_fifa_rank.rank_diff,df_prob_draw_fifa_rank.prob, color='red', size=8, alpha=0.5) 
+    
+    plot_dict = {"W_Prob":plot_pVic, "D_Prob":plot_pDrw}
+    
+    script, div = components(plot_dict)
+    
+    return render_template('index.html', js_resources=js_resources, script=script, div=div)
 
 @app.route('/country_data',methods=['GET','POST'])
 def country():

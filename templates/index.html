@@ -3,11 +3,13 @@
   <meta name="viewport" content = "width=device-width, initial-scale=1.0">
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{ js_resources | safe }}
+    {{ script | safe }}
   </head>
 
-  <body class = "body" style="background-color:lightgrey;">
+  <body class = "body" style="background-color:lightgrey; padding-bottom: 70px;">
     <nav class="navbar navbar-inverse navbar-fixed-bottom">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -21,5 +23,53 @@
         </ul>
       </div>
     </nav>
+    
+    <h1>FIFA Rankings and the chances of victory</h1>
+    <p>
+      FIFA, the world governing body for soccer, developed a ranking scheme for
+      international teams that started in 1993.
+      <a href="http://www.fifa.com/fifa-world-ranking/procedure/index.html">The method</a>
+      assigns points to teams after each match, and the number of points added or 
+      subtracted to related to the match result, the strength of the opponent, and
+      the importance of the match.
+    </p>
+    <p>
+      The FIFA rankings have been <a href="http://bleacherreport.com/articles/1702236-5-reasons-why-fifa-rankings-are-a-joke">heavily criticised</a>,
+      but the plot shows they can be useful predictors of soccer results.
+      International match results from 1993 to present day were compared with the
+      difference in FIFA ranking between two teams at the time the match was played. A
+      probability of victory was calculated from this data, showing that higher ranked
+      teams have a better chance of winning a match. 
+    </p>
+    <p>
+      Teams at the very top and very bottom of the FIFA rankings rarely play each
+      other, and the small sample size introduces noise into the probability analysis.
+      Teams 
+    </p>
+    
+    {{ div.W_Prob | safe }}
+    
+    <p>
+      Teams at the very top and very bottom of the FIFA rankings rarely play each
+      other, and the small sample size introduces noise into the probability analysis.
+      Of course, the higher ranked teams are heavily favored in such cases.
+    </p>
+    
+    <p>
+      Teams that qualify for the World Cup play a group stage of usually 3 games,
+      and results at this stage determine if the team progresses or returns home.
+      3 points are awarded to teams for a victory, 1 point for a draw, and 0 for
+      a loss. The data from the international matches show that there is at most
+      about a 1 in 4 chance of a match being drawn, and the probability decreases
+      the further teams are separated according to the FIFA rankings. 
+    </p>
+    
+    {{ div.D_Prob | safe }}
+    
+    <p>
+      This analysis and the FIFA rankings do not account for teams playing a match
+      at home or away. 
+    </p>
+    
   </body>
 </html>  
