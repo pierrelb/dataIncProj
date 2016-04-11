@@ -429,5 +429,5 @@ def fun():
     return render_template('interesting.html', js_resources=js_resources, script=script, div=div)
 
 if __name__ == '__main__':
-  app.run(debug=True)#port=33507)
+  app.run(port=33507)#debug=True)
   
