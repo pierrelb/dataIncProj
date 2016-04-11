@@ -1,0 +1,403 @@
+<html>
+  <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap.min.css') }}">
+  <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    {{ js_resources | safe }}
+    {{ script | safe }}
+  </head>
+
+  <body class = "body" style="background-color:lightgrey; padding-bottom: 70px; padding-left: 50px;">
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">World Cup Analysis</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/match_predict">Euro 2016</a></li>
+          <li><a href="/country_data">Team Analysis</a></li>
+          <li><a href="/player_data">Player Analysis</a></li>
+          <li><a href="/league_data">Professional League Effect</a></li>
+          <li><a href="/interesting_stuff">Other Topics</a></li>
+        </ul>
+      </div>
+    </nav>
+    
+    <h1>Euro 2016</h1>
+    <div class="group-matches" id="group-A">
+      <h1> Group A Matches</h1>
+      <div id="match-1">France vs Romania - 2016-06-10
+        {{ div.match_1 | safe }}
+        Prediction: {{ pred.match_1 | safe }}
+        <!-- <tr>
+          <td>France<input type="radio" name="match-1" id="FRA"></td>
+          <td>Draw <input type="radio" name="match-1" id="Draw"></td>
+          <td>Romania<input type="radio" name="match-1" id="ROU"></td>
+        </tr> -->
+      </div>
+      <div id="match-2">Albania vs Switzerland - 2016-06-11
+        {{ div.match_2 | safe }}
+        Prediction: {{ pred.match_2 | safe }}
+        <!-- <tr>
+          <td>Albania<input type="radio" name="match-2" id="ALB"></td>
+          <td>Draw <input type="radio" name="match-2" id="Draw"></td>
+          <td>Switzerland<input type="radio" name="match-2" id="SUI"></td>
+        </tr> -->
+      </div>
+      <div id="match-3">Romania vs Switzerland - 2016-06-15
+        {{ div.match_3 | safe }}
+        Prediction: {{ pred.match_3 | safe }}
+        <!-- <tr>
+          <td>Romania<input type="radio" name="match-3" id="ROU"></td>
+          <td>Draw <input type="radio" name="match-3" id="Draw"></td>
+          <td>Switzerland<input type="radio" name="match-3" id="SUI"></td>
+        </tr> -->
+      </div>
+      <div id="match-4">France vs Albania - 2016-06-15
+        {{ div.match_4 | safe }}
+        Prediction: {{ pred.match_4 | safe }}
+        <!-- <tr>
+          <td>France<input type="radio" name="match-4" id="FRA"></td>
+          <td>Draw <input type="radio" name="match-4" id="Draw"></td>
+          <td>Albania<input type="radio" name="match-4" id="ALB"></td>
+        </tr> -->
+      </div>
+      <div id="match-5">Switzerland vs France - 2016-06-19
+        {{ div.match_5 | safe }}
+        Prediction: {{ pred.match_5 | safe }}
+        <!-- <tr>
+          <td>Switzerland<input type="radio" name="match-5" id="SUI"></td>
+          <td>Draw <input type="radio" name="match-5" id="Draw"></td>
+          <td>France<input type="radio" name="match-5" id="FRA"></td>
+        </tr> -->
+      </div>
+      <div id="match-6">Romania vs Albania - 2016-06-19
+        {{ div.match_6 | safe }}
+        Prediction: {{ pred.match_6 | safe }}
+        <!-- <tr>
+          <td>Romania<input type="radio" name="match-6" id="ROU"></td>
+          <td>Draw <input type="radio" name="match-6" id="Draw"></td>
+          <td>Albania<input type="radio" name="match-6" id="ALB"></td>
+        </tr> -->
+      </div>
+      <div class="gp-table" id="gp-A"><h1>Group A</h1>
+        {{ table.gp_A | safe }}
+      </div>
+    </div>
+    <div class="group-matches" id="group-B">
+      <h1> Group B Matches</h1>
+      <div id="match-7">Wales vs Slovakia - 2016-06-11
+        {{ div.match_7 | safe }}
+        Prediction: {{ pred.match_7 | safe }}
+        <!-- <tr>
+          <td>Wales<input type="radio" name="match-7" id="WAL"></td>
+          <td>Draw <input type="radio" name="match-7" id="Draw"></td>
+          <td>Slovakia<input type="radio" name="match-7" id="SVK"></td>
+        </tr> -->
+      </div>
+      <div id="match-8">England vs Russia - 2016-06-11
+        {{ div.match_8 | safe }}
+        Prediction: {{ pred.match_8 | safe }}
+        <!-- <tr>
+          <td>England<input type="radio" name="match-8" id="ENG"></td>
+          <td>Draw <input type="radio" name="match-8" id="Draw"></td>
+          <td>Russia<input type="radio" name="match-8" id="RUS"></td>
+        </tr> -->
+      </div>
+      <div id="match-9">Russia vs Slovakia - 2016-06-15
+        {{ div.match_9 | safe }}
+        Prediction: {{ pred.match_9 | safe }}
+        <!-- <tr>
+          <td>Russia<input type="radio" name="match-9" id="RUS"></td>
+          <td>Draw <input type="radio" name="match-9" id="Draw"></td>
+          <td>Slovakia<input type="radio" name="match-9" id="SVK"></td>
+        </tr> -->
+      </div>
+      <div id="match-10">England vs Wales - 2016-06-16
+        {{ div.match_10 | safe }}
+        Prediction: {{ pred.match_10 | safe }}
+        <!-- <tr>
+          <td>England<input type="radio" name="match-10" id="ENG"></td>
+          <td>Draw <input type="radio" name="match-10" id="Draw"></td>
+          <td>Wales<input type="radio" name="match-10" id="WAL"></td>
+        </tr> -->
+      </div>
+      <div id="match-11">Slovakia vs England - 2016-06-20
+        {{ div.match_11 | safe }}
+        Prediction: {{ pred.match_11 | safe }}
+        <!-- <tr>
+          <td>Slovakia<input type="radio" name="match-11" id="SVK"></td>
+          <td>Draw <input type="radio" name="match-11" id="Draw"></td>
+          <td>England<input type="radio" name="match-11" id="ENG"></td>
+        </tr> -->
+      </div>
+      <div id="match-12">Russia vs Wales - 2016-06-20
+        {{ div.match_12 | safe }}
+        Prediction: {{ pred.match_12 | safe }}
+        <!-- <tr>
+          <td>Russia<input type="radio" name="match-12" id="RUS"></td>
+          <td>Draw <input type="radio" name="match-12" id="Draw"></td>
+          <td>Wales<input type="radio" name="match-12" id="WAL"></td>
+        </tr> -->
+      </div>
+      <div class="gp-table" id="gp-B"><h1>Group B</h1>
+        {{ table.gp_B | safe }}
+      </div>
+    </div>
+    <div class="group-matches" id="group-C">
+      <h1> Group C Matches</h1>
+      <div id="match-13">Poland vs Northern Ireland - 2016-06-12
+        {{ div.match_13 | safe }}
+        Prediction: {{ pred.match_13 | safe }}
+        <!-- <tr>
+          <td>Poland<input type="radio" name="match-13" id="POL"></td>
+          <td>Draw <input type="radio" name="match-13" id="Draw"></td>
+          <td>Northern Ireland<input type="radio" name="match-13" id="NIR"></td>
+        </tr> -->
+      </div>
+      <div id="match-14">Germany vs Ukraine - 2016-06-12
+        {{ div.match_14 | safe }}
+        Prediction: {{ pred.match_14 | safe }}
+        <!-- <tr>
+          <td>Germany<input type="radio" name="match-14" id="GER"></td>
+          <td>Draw <input type="radio" name="match-14" id="Draw"></td>
+          <td>Ukraine<input type="radio" name="match-14" id="UKR"></td>
+        </tr> -->
+      </div>
+      <div id="match-15">Ukraine vs Northern Ireland - 2016-06-16
+        {{ div.match_15 | safe }}
+        Prediction: {{ pred.match_15 | safe }}
+        <!-- <tr>
+          <td>Ukraine<input type="radio" name="match-15" id="UKR"></td>
+          <td>Draw <input type="radio" name="match-15" id="Draw"></td>
+          <td>Northern Ireland<input type="radio" name="match-15" id="NIR"></td>
+        </tr> -->
+      </div>
+      <div id="match-16">Germany vs Poland - 2016-06-16
+        {{ div.match_16 | safe }}
+        Prediction: {{ pred.match_16 | safe }}
+        <!-- <tr>
+          <td>Germany<input type="radio" name="match-16" id="GER"></td>
+          <td>Draw <input type="radio" name="match-16" id="Draw"></td>
+          <td>Poland<input type="radio" name="match-16" id="POL"></td>
+        </tr> -->
+      </div>
+      <div id="match-17">Northern Ireland vs Germany - 2016-06-21
+        {{ div.match_17 | safe }}
+        Prediction: {{ pred.match_17 | safe }}
+        <!-- <tr>
+          <td>Northern Ireland<input type="radio" name="match-17" id="NIR"></td>
+          <td>Draw <input type="radio" name="match-17" id="Draw"></td>
+          <td>Germany<input type="radio" name="match-17" id="GER"></td>
+        </tr> -->
+      </div>
+      <div id="match-18">Ukraine vs Poland - 2016-06-21
+        {{ div.match_18 | safe }}
+        Prediction: {{ pred.match_18 | safe }}
+        <!-- <tr>
+          <td>Ukraine<input type="radio" name="match-18" id="UKR"></td>
+          <td>Draw <input type="radio" name="match-18" id="Draw"></td>
+          <td>Poland<input type="radio" name="match-18" id="POL"></td>
+        </tr> -->
+      </div>
+      <div class="gp-table" id="gp-C"><h1>Group C</h1>
+        {{ table.gp_C | safe }}
+      </div>
+    </div>
+    <div class="group-matches" id="group-D">
+      <h1> Group D Matches</h1>
+      <div id="match-19">Turkey vs Croatia - 2016-06-12
+        {{ div.match_19 | safe }}
+        Prediction: {{ pred.match_19 | safe }}
+        <!-- <tr>
+          <td>Turkey<input type="radio" name="match-19" id="TUR"></td>
+          <td>Draw <input type="radio" name="match-19" id="Draw"></td>
+          <td>Croatia<input type="radio" name="match-19" id="CRO"></td>
+        </tr> -->
+      </div>
+      <div id="match-20">Spain vs Czech Republic - 2016-06-13
+        {{ div.match_20 | safe }}
+        Prediction: {{ pred.match_20 | safe }}
+        <!-- <tr>
+          <td>Spain<input type="radio" name="match-20" id="ESP"></td>
+          <td>Draw <input type="radio" name="match-20" id="Draw"></td>
+          <td>Czech Republic<input type="radio" name="match-20" id="CZE"></td>
+        </tr> -->
+      </div>
+      <div id="match-21">Czech Republic vs Croatia - 2016-06-17
+        {{ div.match_21 | safe }}
+        Prediction: {{ pred.match_21 | safe }}
+        <!-- <tr>
+          <td>Czech Republic<input type="radio" name="match-21" id="CZE"></td>
+          <td>Draw <input type="radio" name="match-21" id="Draw"></td>
+          <td>Croatia<input type="radio" name="match-21" id="CRO"></td>
+        </tr> -->
+      </div>
+      <div id="match-22">Spain vs Turkey - 2016-06-17
+        {{ div.match_22 | safe }}
+        Prediction: {{ pred.match_22 | safe }}
+        <!-- <tr>
+          <td>Spain<input type="radio" name="match-22" id="ESP"></td>
+          <td>Draw <input type="radio" name="match-22" id="Draw"></td>
+          <td>Turkey<input type="radio" name="match-22" id="TUR"></td>
+        </tr> -->
+      </div>
+      <div id="match-23">Croatia vs Spain - 2016-06-21
+        {{ div.match_23 | safe }}
+        Prediction: {{ pred.match_23 | safe }}
+        <!-- <tr>
+          <td>Croatia<input type="radio" name="match-23" id="CRO"></td>
+          <td>Draw <input type="radio" name="match-23" id="Draw"></td>
+          <td>Spain<input type="radio" name="match-23" id="ESP"></td>
+        </tr> -->
+      </div>
+      <div id="match-24">Czech Republic vs Turkey - 2016-06-21
+        {{ div.match_24 | safe }}
+        Prediction: {{ pred.match_24 | safe }}
+        <!-- <tr>
+          <td>Czech Republic<input type="radio" name="match-24" id="CZE"></td>
+          <td>Draw <input type="radio" name="match-24" id="Draw"></td>
+          <td>Turkey<input type="radio" name="match-24" id="TUR"></td>
+        </tr> -->
+      </div>
+      <div class="gp-table" id="gp-D"><h1>Group D</h1>
+        {{ table.gp_D | safe }}
+      </div>
+    </div>
+    <div class="group-matches" id="group-E">
+      <h1> Group E Matches</h1>
+      <div id="match-25">Republic of Ireland vs Sweden - 2016-06-13
+        {{ div.match_25 | safe }}
+        Prediction: {{ pred.match_25 | safe }}
+        <!-- <tr>
+          <td>Republic of Ireland<input type="radio" name="match-25" id="IRL"></td>
+          <td>Draw <input type="radio" name="match-25" id="Draw"></td>
+          <td>Sweden<input type="radio" name="match-25" id="SWE"></td>
+        </tr> -->
+      </div>
+      <div id="match-26">Belgium vs Italy - 2016-06-13
+        {{ div.match_26 | safe }}
+        Prediction: {{ pred.match_26 | safe }}
+        <!-- <tr>
+          <td>Belgium<input type="radio" name="match-26" id="BEL"></td>
+          <td>Draw <input type="radio" name="match-26" id="Draw"></td>
+          <td>Italy<input type="radio" name="match-26" id="ITA"></td>
+        </tr> -->
+      </div>
+      <div id="match-27">Italy vs Sweden - 2016-06-17
+        {{ div.match_27 | safe }}
+        Prediction: {{ pred.match_27 | safe }}
+        <!-- <tr>
+          <td>Italy<input type="radio" name="match-27" id="ITA"></td>
+          <td>Draw <input type="radio" name="match-27" id="Draw"></td>
+          <td>Sweden<input type="radio" name="match-27" id="SWE"></td>
+        </tr> -->
+      </div>
+      <div id="match-28">Belgium vs Republic of Ireland - 2016-06-18
+        {{ div.match_28 | safe }}
+        Prediction: {{ pred.match_28 | safe }}
+        <!-- <tr>
+          <td>Belgium<input type="radio" name="match-28" id="BEL"></td>
+          <td>Draw <input type="radio" name="match-28" id="Draw"></td>
+          <td>Republic of Ireland<input type="radio" name="match-28" id="IRL"></td>
+        </tr> -->
+      </div>
+      <div id="match-29">Sweden vs Belgium - 2016-06-22
+        {{ div.match_29 | safe }}
+        Prediction: {{ pred.match_29 | safe }}
+        <!-- <tr>
+          <td>Sweden<input type="radio" name="match-29" id="SWE"></td>
+          <td>Draw <input type="radio" name="match-29" id="Draw"></td>
+          <td>Belgium<input type="radio" name="match-29" id="BEL"></td>
+        </tr> -->
+      </div>
+      <div id="match-30">Italy vs Republic of Ireland - 2016-06-22
+        {{ div.match_30 | safe }}
+        Prediction: {{ pred.match_30 | safe }}
+        <!-- <tr>
+          <td>Italy<input type="radio" name="match-30" id="ITA"></td>
+          <td>Draw <input type="radio" name="match-30" id="Draw"></td>
+          <td>Republic of Ireland<input type="radio" name="match-30" id="IRL"></td>
+        </tr> -->
+      </div>
+      <div class="gp-table" id="gp-E"><h1>Group E</h1>
+        {{ table.gp_E | safe }}
+      </div>
+    </div>
+    <div class="group-matches" id="group-F">
+      <h1> Group F Matches</h1>
+      <div id="match-31">Austria vs Hungary - 2016-06-14
+        {{ div.match_31 | safe }}
+        Prediction: {{ pred.match_31 | safe }}
+        <!-- <tr>
+          <td>Austria<input type="radio" name="match-31" id="AUT"></td>
+          <td>Draw <input type="radio" name="match-31" id="Draw"></td>
+          <td>Hungary<input type="radio" name="match-31" id="HUN"></td>
+        </tr> -->
+      </div>
+      <div id="match-32">Portugal vs Iceland - 2016-06-14
+        {{ div.match_32 | safe }}
+        Prediction: {{ pred.match_32 | safe }}
+        <!-- <tr>
+          <td>Portugal<input type="radio" name="match-32" id="POR"></td>
+          <td>Draw <input type="radio" name="match-32" id="Draw"></td>
+          <td>Iceland<input type="radio" name="match-32" id="ISL"></td>
+        </tr> -->
+      </div>
+      <div id="match-33">Iceland vs Hungary - 2016-06-18
+        {{ div.match_33 | safe }}
+        Prediction: {{ pred.match_33 | safe }}
+        <!-- <tr>
+          <td>Iceland<input type="radio" name="match-33" id="ISL"></td>
+          <td>Draw <input type="radio" name="match-33" id="Draw"></td>
+          <td>Hungary<input type="radio" name="match-33" id="HUN"></td>
+        </tr> -->
+      </div>
+      <div id="match-34">Portugal vs Austria - 2016-06-18
+        {{ div.match_34 | safe }}
+        Prediction: {{ pred.match_34 | safe }}
+        <!-- <tr>
+          <td>Portugal<input type="radio" name="match-34" id="POR"></td>
+          <td>Draw <input type="radio" name="match-34" id="Draw"></td>
+          <td>Austria<input type="radio" name="match-34" id="AUT"></td>
+        </tr> -->
+      </div>
+      <div id="match-35">Iceland vs Austria - 2016-06-22
+        {{ div.match_35 | safe }}
+        Prediction: {{ pred.match_35 | safe }}
+        <!-- <tr>
+          <td>Iceland<input type="radio" name="match-35" id="ISL"></td>
+          <td>Draw <input type="radio" name="match-35" id="Draw"></td>
+          <td>Austria<input type="radio" name="match-35" id="AUT"></td>
+        </tr> -->
+      </div>
+      <div id="match-36">Hungary vs Portugal - 2016-06-22
+        {{ div.match_36 | safe }}
+        Prediction: {{ pred.match_36 | safe }}
+        <!-- <tr>
+          <td>Hungary<input type="radio" name="match-36" id="HUN"></td>
+          <td>Draw <input type="radio" name="match-36" id="Draw"></td>
+          <td>Portugal<input type="radio" name="match-36" id="POR"></td>
+        </tr> -->
+      </div>
+      <div class="gp-table" id="gp-F"><h1>Group F</h1>
+        {{ table.gp_F | safe }}
+      </div>
+    </div>
+    <!-- <div style="float:left; clear: left;">
+      <div style="float:left;">France</div>
+      <div style="float:left;">{{ div.match_1 | safe }}</div>
+      <div style="float:left;">Romania</div>
+    </div> -->
+    <!-- <div style="float:left; clear: left;">
+      <form id='match1' method='post'>
+        <p>
+          France: <input type="radio" name="match_1" id='FRA'>
+          Draw: <input type="radio" name="match_1" id='Draw'>
+          Romania: <input type="radio" name="match_1" id='ROU'>
+        </p>
+    </div> -->
+  </body>
+</html>  

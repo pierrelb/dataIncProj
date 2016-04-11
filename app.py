@@ -1,6 +1,8 @@
 import locale
 import calendar
+import random
 import pandas as pd
+import numpy as np
 
 from flask import Flask, render_template, request, redirect
 
@@ -32,8 +34,17 @@ df_squads['birth_month'] = df_squads.dob.map(lambda x: x.month)
 
 df_league_data = pd.read_csv("top_five_leagues.csv")
 
-df_prob_fifa_rank = pd.read_csv('prob_win.csv')
+df_prob_win_fifa_rank = pd.read_csv('prob_win.csv')
 df_prob_draw_fifa_rank = pd.read_csv('prob_draw.csv')
+
+# Clear poor probs (determined on sparse data)
+rem_idx = []
+rem_idx += df_prob_win_fifa_rank[df_prob_win_fifa_rank.rank_diff < -150][df_prob_win_fifa_rank[df_prob_win_fifa_rank.rank_diff < -150].prob > 0.1].index.tolist()
+rem_idx += df_prob_win_fifa_rank[df_prob_win_fifa_rank.rank_diff > 150][df_prob_win_fifa_rank[df_prob_win_fifa_rank.rank_diff > 150].prob < 0.9].index.tolist()
+
+df_prob_win_fifa_rank = df_prob_win_fifa_rank.drop(df_prob_win_fifa_rank.index[rem_idx])
+
+df_fifa_latest_rank = pd.read_csv('latest-fifa-world-ranking.csv')
 
 js_resources = INLINE.render_js()
 
@@ -52,7 +63,7 @@ def index():
                   toolbar_location=None
                   )
                   
-    plot_pVic.scatter(df_prob_fifa_rank.rank_diff, df_prob_fifa_rank.prob, color='blue', size=8, alpha=0.5)
+    plot_pVic.scatter(df_prob_win_fifa_rank.rank_diff, df_prob_win_fifa_rank.prob, color='blue', size=8, alpha=0.5)
     
     plot_pDrw = figure(tools=TOOLS,
                   x_axis_label='Difference in team rankings',
@@ -67,6 +78,241 @@ def index():
     script, div = components(plot_dict)
     
     return render_template('index.html', js_resources=js_resources, script=script, div=div)
+
+@app.route('/match_predict',methods=['GET','POST'])
+def predict():
+    
+    def weighted_choice(choices):
+        total = sum(w for c, w in choices)
+        r = random.uniform(0, total)
+        upto = 0
+        for c, w in choices:
+            if upto + w >= r:
+                return c
+            upto += w
+        assert False, "Shouldn't get here"
+    
+    df_fifa_latest_rank
+    
+    z = np.polyfit(df_prob_win_fifa_rank.rank_diff, df_prob_win_fifa_rank.prob, 4)
+    p_win = np.poly1d(z)
+    
+    # p_win(_some_rank)
+    
+    z = np.polyfit(df_prob_draw_fifa_rank.rank_diff.values, df_prob_draw_fifa_rank.prob.values, 3)
+    p_draw = np.poly1d(z)
+    
+    country_codes = {
+        "Albania": "ALB",
+        "Austria": "AUT",
+        "Belgium": "BEL",
+        "Croatia": "CRO",
+        "Czech Republic": "CZE",
+        "England": "ENG",
+        "France": "FRA",
+        "Germany": "GER",
+        "Hungary": "HUN",
+        "Iceland": "ISL",
+        "Italy": "ITA",
+        "Northern Ireland": "NIR",
+        "Poland": "POL",
+        "Portugal": "POR",
+        "Republic of Ireland": "IRL",
+        "Romania": "ROU",
+        "Russia": "RUS",
+        "Slovakia": "SVK",
+        "Spain": "ESP",
+        "Sweden": "SWE",
+        "Switzerland": "SUI",
+        "Turkey": "TUR",
+        "Ukraine": "UKR",
+        "Wales": "WAL",
+    }
+    
+    country_from_codes = {
+        "ALB": "Albania",
+        "AUT": "Austria",
+        "BEL": "Belgium",
+        "CRO": "Croatia",
+        "CZE": "Czech Republic",
+        "ENG": "England",
+        "FRA": "France",
+        "GER": "Germany",
+        "HUN": "Hungary",
+        "ISL": "Iceland",
+        "ITA": "Italy",
+        "NIR": "Northern Ireland",
+        "POL": "Poland",
+        "POR": "Portugal",
+        "IRL": "Republic of Ireland",
+        "ROU": "Romania",
+        "RUS": "Russia",
+        "SVK": "Slovakia",
+        "ESP": "Spain",
+        "SWE": "Sweden",
+        "SUI": "Switzerland",
+        "TUR": "Turkey",
+        "UKR": "Ukraine",
+        "WAL": "Wales",
+    }
+    
+    grp_A_matches = [
+        ['2016-06-10', 'France', 'Romania'],
+        ['2016-06-11', 'Albania', 'Switzerland'],
+        ['2016-06-15', 'Romania', 'Switzerland'],
+        ['2016-06-15', 'France', 'Albania'],
+        ['2016-06-19', 'Switzerland', 'France'],
+        ['2016-06-19', 'Romania', 'Albania'],
+    ]
+    
+    grp_B_matches = [
+        ['2016-06-11', 'Wales', 'Slovakia'],
+        ['2016-06-11', 'England', 'Russia'],
+        ['2016-06-15', 'Russia', 'Slovakia'],
+        ['2016-06-16', 'England', 'Wales'],
+        ['2016-06-20', 'Slovakia', 'England'],
+        ['2016-06-20', 'Russia', 'Wales'],
+    ]
+    
+    grp_C_matches = [
+        ['2016-06-12', 'Poland', 'Northern Ireland'],
+        ['2016-06-12', 'Germany', 'Ukraine'],
+        ['2016-06-16', 'Ukraine', 'Northern Ireland'],
+        ['2016-06-16', 'Germany', 'Poland'],
+        ['2016-06-21', 'Northern Ireland', 'Germany'],
+        ['2016-06-21', 'Ukraine', 'Poland'],
+    ]
+    
+    grp_D_matches = [
+        ['2016-06-12', 'Turkey', 'Croatia'],
+        ['2016-06-13', 'Spain', 'Czech Republic'],
+        ['2016-06-17', 'Czech Republic', 'Croatia'],
+        ['2016-06-17', 'Spain', 'Turkey'],
+        ['2016-06-21', 'Croatia', 'Spain'],
+        ['2016-06-21', 'Czech Republic', 'Turkey'],
+    ]
+    
+    grp_E_matches = [
+        ['2016-06-13', 'Republic of Ireland', 'Sweden'],
+        ['2016-06-13', 'Belgium', 'Italy'],
+        ['2016-06-17', 'Italy', 'Sweden'],
+        ['2016-06-18', 'Belgium', 'Republic of Ireland'],
+        ['2016-06-22', 'Sweden', 'Belgium'],
+        ['2016-06-22', 'Italy', 'Republic of Ireland'],
+    ]
+    
+    grp_F_matches = [
+        ['2016-06-14', 'Austria', 'Hungary'],
+        ['2016-06-14', 'Portugal', 'Iceland'],
+        ['2016-06-18', 'Iceland', 'Hungary'],
+        ['2016-06-18', 'Portugal', 'Austria'],
+        ['2016-06-22', 'Iceland', 'Austria'],
+        ['2016-06-22', 'Hungary', 'Portugal'],
+    ]
+    
+    grp_matchs = grp_A_matches + grp_B_matches + grp_C_matches + grp_D_matches + grp_E_matches + grp_F_matches
+    
+    df_ctry_codes = df_fifa_latest_rank.country_code
+    probailities = []
+    plot_dict = {}
+    prediction_dict = {}
+    results = {}
+    for k, match in enumerate(grp_matchs,1):
+        rank_diff = df_fifa_latest_rank[df_ctry_codes==country_codes[match[1]]].ranking.values - df_fifa_latest_rank[df_ctry_codes==country_codes[match[2]]].ranking.values
+        probs = [p_win(rank_diff*-1)[0], p_draw(abs(rank_diff))[0], p_win(rank_diff)[0]]
+        probs = [float(i)/sum(probs) for i in probs]
+        probailities = [country_codes[match[1]], 'DRAW', country_codes[match[2]]] + probs
+        choices = [(country_codes[match[1]], probs[0]), ('DRAW', probs[1]), (country_codes[match[2]], probs[2])]
+        
+        prediction = weighted_choice(choices)
+        if prediction=='DRAW':
+            prediction_dict["match_{0}".format(k)] = prediction
+        else:
+            prediction_dict["match_{0}".format(k)] = country_from_codes[prediction]
+        
+        df = pd.DataFrame(probailities[3:], probailities[:3])
+        df.columns = ['probability']
+        plot_probs = Bar(df, toolbar_location=None, plot_width=200, plot_height=200, agg='mean')
+        plot_probs.x_range = FactorRange(factors=probailities[:3])
+        plot_dict["match_{0}".format(k)] = plot_probs
+    
+    gp_A = dict.fromkeys(["France","Romania","Albania","Switzerland"], 0)
+    gp_B = dict.fromkeys(["England","Russia","Wales","Slovakia"], 0)
+    gp_C = dict.fromkeys(["Germany","Ukraine","Poland","Northern Ireland"], 0)
+    gp_D = dict.fromkeys(["Spain","Czech Republic","Turkey","Croatia"], 0)
+    gp_E = dict.fromkeys(["Belgium","Italy","Republic of Ireland","Sweden"], 0)
+    gp_F = dict.fromkeys(["Portugal","Iceland","Austria","Hungary"], 0)
+    for k, match in enumerate(grp_A_matches,1):
+        result = prediction_dict["match_{0}".format(k)]
+        if result == 'DRAW':
+            gp_A[match[1]] += 1
+            gp_A[match[2]] += 1
+        else:
+            gp_A[result] += 3
+    
+    for k, match in enumerate(grp_B_matches,7):
+        result = prediction_dict["match_{0}".format(k)]
+        if result == 'DRAW':
+            gp_B[match[1]] += 1
+            gp_B[match[2]] += 1
+        else:
+            gp_B[result] += 3
+
+    for k, match in enumerate(grp_C_matches,13):
+        result = prediction_dict["match_{0}".format(k)]
+        if result == 'DRAW':
+            gp_C[match[1]] += 1
+            gp_C[match[2]] += 1
+        else:
+            gp_C[result] += 3
+
+    for k, match in enumerate(grp_D_matches,19):
+        result = prediction_dict["match_{0}".format(k)]
+        if result == 'DRAW':
+            gp_D[match[1]] += 1
+            gp_D[match[2]] += 1
+        else:
+            gp_D[result] += 3
+
+    for k, match in enumerate(grp_E_matches,25):
+        result = prediction_dict["match_{0}".format(k)]
+        if result == 'DRAW':
+            gp_E[match[1]] += 1
+            gp_E[match[2]] += 1
+        else:
+            gp_E[result] += 3
+
+    for k, match in enumerate(grp_F_matches,31):
+        result = prediction_dict["match_{0}".format(k)]
+        if result == 'DRAW':
+            gp_F[match[1]] += 1
+            gp_F[match[2]] += 1
+        else:
+            gp_F[result] += 3
+            
+    all_groups = [gp_A,gp_B,gp_C,gp_D,gp_E,gp_F]
+    gp_labels = {1:"A",2:"B",3:"C",4:"D",5:"E",6:"F"}
+    table_html = {}
+    for k, group in enumerate(all_groups,1):
+        table_string = ['      <table style="width:100%">']
+        group_standings = {'team':[], 'points':[]}
+        for j in xrange(1,len(group)+1):
+            table_string.append('        <tr>')
+            top = max(group, key=group.get)
+            points = group.get(top)
+            group_standings['team'].append(top)
+            group_standings['points'].append(points)
+            group.pop(top)
+            table_string.append('          <td>{0}</td>'.format(j))
+            table_string.append('          <td>{0}</td>'.format(top))
+            table_string.append('          <td>{0}</td>'.format(points))
+            table_string.append('        </tr>')
+        table_string.append('        </table>')
+        table_html["gp_{0}".format(gp_labels[k])] = '\n'.join(table_string) 
+    
+    script, div = components(plot_dict)
+    
+    return render_template('euro.html', js_resources=js_resources, script=script, div=div, pred=prediction_dict, table=table_html)
 
 @app.route('/country_data',methods=['GET','POST'])
 def country():
@@ -183,5 +429,5 @@ def fun():
     return render_template('interesting.html', js_resources=js_resources, script=script, div=div)
 
 if __name__ == '__main__':
-  app.run(port=33507)
+  app.run(debug=True)#port=33507)
   
